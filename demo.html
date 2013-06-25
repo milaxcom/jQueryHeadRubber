@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>jQueryHeadRubber</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<style>
+	body {margin:0; padding:0;}
+	.content { width: 100%;}
+	#container { width: 100%; min-width:1000px; height:534px; overflow: hidden; position: relative;}
+</style>
+
+</head>
+
+<body>
+	<div class="content">
+        <div id="container"></div>
+    </div>
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="jqheadrubber.min.js"></script>
+    
+    <script type="text/javascript">
+		$(function () {
+
+			$("#container").HeadRubber({
+				/** Required: src attribute for <img>  */
+				src 			: "/stuff/image.jpg",
+				/** Required: real image width  */
+				imageWidth 		: 2580,
+				/** Required: real image height  */
+				imageHeight 	: 1378,
+				/** Optional: left/center/right, center is default */
+				valign			: "center",
+				/** Optional: image show duration, 0 is default */
+				duration		: 3000
+			});
+
+		});
+    </script>
+
+</body>
+</html>
