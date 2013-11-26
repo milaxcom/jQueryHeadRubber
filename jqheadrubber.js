@@ -1,5 +1,5 @@
 /**
- * jQueryHeadRubber v1.0
+ * jQueryHeadRubber v1.1
  *
  * Copyright 2013 Milax
  * http://www.milax.com/
@@ -65,14 +65,21 @@
 	$.fn._HeadRubberSet = function ( option ) {
 			
 		/** Селектор Изображения */
-		$image = $(this);
+		var $image = $(this);
 		/** Селектор контейнера */
-		$container = $image.parent();
+		var $container = $image.parent();
 
 		$container.css({
 			"overflow" 		: "hidden"
 		});
 
+		/** 
+		 * Вычисляем минимальное значение ширины изобр. на основании
+		 * высоты контейнера.
+		 */
+		var $minWidth = Math.round( ($container.height() * option.imageWidth) / option.imageHeight );
+		
+		/** Присваивание параметров. */
 		$image
 		.css({
 			"position" 		: "absolute",
@@ -85,7 +92,8 @@
 			"valign"		: option.valign,
 			"duration"		: option.duration,
 			"width"			: option.imageWidth,
-			"height"		: option.imageHeight
+			"height"		: option.imageHeight,
+			"minWidth"		: $minWidth
 		})
 		.attr("width", "100%");
 
@@ -114,11 +122,17 @@
 		/** Реальные параметры изображения */
 		var width = $(this).data( "width" );
 		var height = $(this).data( "height" );
+		/** Минимальная ширина изображения */
+		var minWidth = $(this).data( "minWidth" );
 		/** Параметры контейнера (текущие) */
 		var containerWidth = $container.width();
 		var containerHeight = $container.height();
 		/** Фактическая высота изображения */
-		var factHeight = ( containerWidth/width ) * height ;
+		var factHeight = ( containerWidth/width ) * height;
+		/** Позиция изображения */
+		var left = 0;
+		/** Ширина изображения */
+		var imageWidth = containerWidth;
 		
 		/** 
 		 * Вычисляем значение top отталкиваясь от параметров и
@@ -144,11 +158,30 @@
 
 		}
 
-		top = Math.round( top );
+		/** 
+		 * Расширенное условие.
+		 * Eсли изображение становится меньше контейнера по высоте
+		 * — позиционируем изображение так чтобы его высота была
+		 * равной высоте контейнара.
+		 * Сложность в том, что приходится адаптировать позицию
+		 * left изображения и его ширину.
+		 */
+		if (containerWidth < minWidth) {
+			/** Шириной изображения равна минимальной ширине */
+			imageWidth = minWidth;
+			
+			/** Вычисляем позицию */
+			left = ((minWidth - containerWidth) / 2) * (-1);
+			left = Math.round( left );
+			top = 0;
+		} else {
+			top = Math.round( top );
+		}
 
 		$(this).css({
 			top 		: top,
-			width		: containerWidth // fix ie6,7
+			left		: left,
+			width		: imageWidth // fix ie6,7
 		});
 
 	}
