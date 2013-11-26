@@ -5,7 +5,7 @@ jQueryHeadRubber
 
 Include script after the jQuery library:
 ```HTML
-<script type="text/javascript" src="jqheadrubber.min.js"></script>
+<script type="text/javascript" src="jquery.headrubber.min.js"></script>
 ```
 
 Set styles for your container:
