@@ -1,5 +1,5 @@
 /**
- * jQueryHeadRubber v1.1
+ * jQueryHeadRubber v1.2
  *
  * Copyright 2013 Milax
  * http://www.milax.com/
@@ -73,12 +73,6 @@
 			"overflow" 		: "hidden"
 		});
 
-		/** 
-		 * Вычисляем минимальное значение ширины изобр. на основании
-		 * высоты контейнера.
-		 */
-		var $minWidth = Math.round( ($container.height() * option.imageWidth) / option.imageHeight );
-		
 		/** Присваивание параметров. */
 		$image
 		.css({
@@ -92,8 +86,7 @@
 			"valign"		: option.valign,
 			"duration"		: option.duration,
 			"width"			: option.imageWidth,
-			"height"		: option.imageHeight,
-			"minWidth"		: $minWidth
+			"height"		: option.imageHeight
 		})
 		.attr("width", "100%");
 
@@ -122,8 +115,6 @@
 		/** Реальные параметры изображения */
 		var width = $(this).data( "width" );
 		var height = $(this).data( "height" );
-		/** Минимальная ширина изображения */
-		var minWidth = $(this).data( "minWidth" );
 		/** Параметры контейнера (текущие) */
 		var containerWidth = $container.width();
 		var containerHeight = $container.height();
@@ -133,7 +124,10 @@
 		var left = 0;
 		/** Ширина изображения */
 		var imageWidth = containerWidth;
-		
+
+		/** Вычисляем минимальное значение ширины изобр. на основании высоты контейнера. */
+		var minWidth = Math.round( (containerHeight * width) / height );
+
 		/** 
 		 * Вычисляем значение top отталкиваясь от параметров и
 		 * позиции по вертикали. 
